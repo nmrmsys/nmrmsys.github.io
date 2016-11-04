@@ -1,2 +1,5 @@
 # nmrmsys.github.io
-[UNDER CONSTRUCTION] nmrmsys website http://nmrmsys.github.io
+
+nmrmsys’s personal website
+
+http://nmrmsys.github.io
