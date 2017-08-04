@@ -1,6 +1,0 @@
-{
-  "name": "nmrmsys.github.io",
-  "tagline": "nmrmsys’s personal  website",
-  "body": "# Tools\r\n・[AsWebODM](https://github.com/nmrmsys/AsWebODM)<br>\r\n・[ExSQell](https://github.com/nmrmsys/ExSQell)<br>\r\n・[X-Projects](https://github.com/nmrmsys/X-Projects)<br>\r\n・[Terraformers](https://github.com/nmrmsys/dockerfiles/tree/master/terraformers)<br>\r\n・[FFT](https://github.com/nmrmsys/FFT)<br>\r\n・[SQLB](https://github.com/nmrmsys/SQLB)<br>\r\n\r\n# Slides\r\n・[シェル芸でもIoTがしたい！](https://dl.dropboxusercontent.com/u/54939588/slides/IoT-ShellGei-and-OtherDelusions.html)<br>\r\n・[シェル芸で使いたいjqイディオム](https://dl.dropboxusercontent.com/u/54939588/slides/UsefulJqIdiomInShellGei.html)<br>\r\n・[CloudFormation Designerと諸々](https://dl.dropboxusercontent.com/u/54939588/slides/CloudFormationDesignerAndMore.html)<br>\r\n・[もしITエンジニアが儒教を学んだら](https://dl.dropboxusercontent.com/u/54939588/slides/If-ItEngineer-Becomes-Confucian.html)<br>\r\n・[RedmineとExcelを使ってCCPMっぽい事をしてみる](https://dl.dropboxusercontent.com/u/54939588/slides/X-ProjectsCCPM_OnlyMeRailsCant.html)<br>\r\n・[X-Projects with CCPM](https://dl.dropboxusercontent.com/u/54939588/slides/X-ProjectsCCPM.html)<br>\r\n\r\n# Contact\r\n・nmrmsys[at]gmail.com<br>\r\n",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}
