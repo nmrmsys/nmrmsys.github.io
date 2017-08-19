@@ -1,0 +1,307 @@
+{
+    "Reservations": [
+        {
+            "OwnerId": "xxxxxxxxxxxxxx", 
+            "ReservationId": "r-24e1058x", 
+            "Groups": [], 
+            "Instances": [
+                {
+                    "Monitoring": {
+                        "State": "disabled"
+                    }, 
+                    "PublicDnsName": "", 
+                    "RootDeviceType": "ebs", 
+                    "State": {
+                        "Code": 80, 
+                        "Name": "stopped"
+                    }, 
+                    "EbsOptimized": false, 
+                    "LaunchTime": "2016-04-26T13:41:31.000Z", 
+                    "PrivateIpAddress": "10.0.0.20", 
+                    "ProductCodes": [], 
+                    "VpcId": "vpc-xxxxxxxx", 
+                    "StateTransitionReason": "User initiated (2016-04-26 13:43:45 GMT)", 
+                    "InstanceId": "i-c4be0d5x", 
+                    "ImageId": "ami-f80e0596", 
+                    "PrivateDnsName": "ip-10-0-0-20.ap-northeast-1.compute.internal", 
+                    "KeyName": "xxxxx", 
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "xxxxx", 
+                            "GroupId": "sg-8db80eex"
+                        }
+                    ], 
+                    "ClientToken": "gARov146113784347x", 
+                    "SubnetId": "subnet-934d48ex", 
+                    "InstanceType": "t2.micro", 
+                    "NetworkInterfaces": [
+                        {
+                            "Status": "in-use", 
+                            "MacAddress": "06:6f:28:3a:92:71", 
+                            "SourceDestCheck": true, 
+                            "VpcId": "vpc-xxxxxxxx", 
+                            "Description": "Primary network interface", 
+                            "NetworkInterfaceId": "eni-492a030x", 
+                            "PrivateIpAddresses": [
+                                {
+                                    "PrivateDnsName": "ip-10-0-0-20.ap-northeast-1.compute.internal", 
+                                    "Primary": true, 
+                                    "PrivateIpAddress": "10.0.0.20"
+                                }
+                            ], 
+                            "PrivateDnsName": "ip-10-0-0-20.ap-northeast-1.compute.internal", 
+                            "Attachment": {
+                                "Status": "attached", 
+                                "DeviceIndex": 0, 
+                                "DeleteOnTermination": true, 
+                                "AttachmentId": "eni-attach-bee9d44x", 
+                                "AttachTime": "2016-04-20T07:37:24.000Z"
+                            }, 
+                            "Groups": [
+                                {
+                                    "GroupName": "xxxxx", 
+                                    "GroupId": "sg-8db80eex"
+                                }
+                            ], 
+                            "SubnetId": "subnet-934d48ex", 
+                            "OwnerId": "xxxxxxxxxxxxxx", 
+                            "PrivateIpAddress": "10.0.0.20"
+                        }
+                    ], 
+                    "SourceDestCheck": true, 
+                    "Placement": {
+                        "Tenancy": "default", 
+                        "GroupName": "", 
+                        "AvailabilityZone": "ap-northeast-1a"
+                    }, 
+                    "Hypervisor": "xen", 
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda", 
+                            "Ebs": {
+                                "Status": "attached", 
+                                "DeleteOnTermination": true, 
+                                "VolumeId": "vol-1ba260ex", 
+                                "AttachTime": "2016-04-20T07:37:24.000Z"
+                            }
+                        }
+                    ], 
+                    "Architecture": "x86_64", 
+                    "StateReason": {
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown", 
+                        "Code": "Client.UserInitiatedShutdown"
+                    }, 
+                    "RootDeviceName": "/dev/xvda", 
+                    "VirtualizationType": "hvm", 
+                    "Tags": [
+                        {
+                            "Value": "Server2", 
+                            "Key": "Name"
+                        }, 
+                        {
+                            "Value": "Fuga", 
+                            "Key": "Hoge"
+                        }
+                    ], 
+                    "AmiLaunchIndex": 0
+                }
+            ]
+        }, 
+        {
+            "OwnerId": "xxxxxxxxxxxxxx", 
+            "ReservationId": "r-2fe1058x", 
+            "Groups": [], 
+            "Instances": [
+                {
+                    "Monitoring": {
+                        "State": "disabled"
+                    }, 
+                    "PublicDnsName": "", 
+                    "RootDeviceType": "ebs", 
+                    "State": {
+                        "Code": 80, 
+                        "Name": "stopped"
+                    }, 
+                    "EbsOptimized": false, 
+                    "LaunchTime": "2016-04-26T13:41:34.000Z", 
+                    "PrivateIpAddress": "10.0.0.30", 
+                    "ProductCodes": [], 
+                    "VpcId": "vpc-xxxxxxxx", 
+                    "StateTransitionReason": "User initiated (2016-04-26 13:43:47 GMT)", 
+                    "InstanceId": "i-d7be0d4x", 
+                    "ImageId": "ami-f80e0596", 
+                    "PrivateDnsName": "ip-10-0-0-30.ap-northeast-1.compute.internal", 
+                    "KeyName": "xxxxx", 
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "xxxxx", 
+                            "GroupId": "sg-8db80eex"
+                        }
+                    ], 
+                    "ClientToken": "Opkxm1461137889508", 
+                    "SubnetId": "subnet-934d48ex", 
+                    "InstanceType": "t2.micro", 
+                    "NetworkInterfaces": [
+                        {
+                            "Status": "in-use", 
+                            "MacAddress": "06:39:71:4f:74:23", 
+                            "SourceDestCheck": true, 
+                            "VpcId": "vpc-xxxxxxxx", 
+                            "Description": "Primary network interface", 
+                            "NetworkInterfaceId": "eni-4b2a0303", 
+                            "PrivateIpAddresses": [
+                                {
+                                    "PrivateDnsName": "ip-10-0-0-30.ap-northeast-1.compute.internal", 
+                                    "Primary": true, 
+                                    "PrivateIpAddress": "10.0.0.30"
+                                }
+                            ], 
+                            "PrivateDnsName": "ip-10-0-0-30.ap-northeast-1.compute.internal", 
+                            "Attachment": {
+                                "Status": "attached", 
+                                "DeviceIndex": 0, 
+                                "DeleteOnTermination": true, 
+                                "AttachmentId": "eni-attach-30e9d4cx", 
+                                "AttachTime": "2016-04-20T07:38:10.000Z"
+                            }, 
+                            "Groups": [
+                                {
+                                    "GroupName": "xxxxx", 
+                                    "GroupId": "sg-8db80eex"
+                                }
+                            ], 
+                            "SubnetId": "subnet-934d48ex", 
+                            "OwnerId": "xxxxxxxxxxxxxx", 
+                            "PrivateIpAddress": "10.0.0.30"
+                        }
+                    ], 
+                    "SourceDestCheck": true, 
+                    "Placement": {
+                        "Tenancy": "default", 
+                        "GroupName": "", 
+                        "AvailabilityZone": "ap-northeast-1a"
+                    }, 
+                    "Hypervisor": "xen", 
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda", 
+                            "Ebs": {
+                                "Status": "attached", 
+                                "DeleteOnTermination": true, 
+                                "VolumeId": "vol-18a361ex", 
+                                "AttachTime": "2016-04-20T07:38:10.000Z"
+                            }
+                        }
+                    ], 
+                    "Architecture": "x86_64", 
+                    "StateReason": {
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown", 
+                        "Code": "Client.UserInitiatedShutdown"
+                    }, 
+                    "RootDeviceName": "/dev/xvda", 
+                    "VirtualizationType": "hvm", 
+                    "AmiLaunchIndex": 0
+                }
+            ]
+        }, 
+        {
+            "OwnerId": "xxxxxxxxxxxxxx", 
+            "ReservationId": "r-bce2061x", 
+            "Groups": [], 
+            "Instances": [
+                {
+                    "Monitoring": {
+                        "State": "disabled"
+                    }, 
+                    "PublicDnsName": "", 
+                    "State": {
+                        "Code": 16, 
+                        "Name": "running"
+                    }, 
+                    "EbsOptimized": false, 
+                    "LaunchTime": "2016-04-28T00:51:20.000Z", 
+                    "PrivateIpAddress": "10.0.0.10", 
+                    "ProductCodes": [], 
+                    "VpcId": "vpc-xxxxxxxx", 
+                    "StateTransitionReason": "", 
+                    "InstanceId": "i-36b80bax", 
+                    "ImageId": "ami-f80e0596", 
+                    "PrivateDnsName": "ip-10-0-0-10.ap-northeast-1.compute.internal", 
+                    "KeyName": "xxxxx", 
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "xxxxx", 
+                            "GroupId": "sg-8db80eex"
+                        }
+                    ], 
+                    "ClientToken": "iUmVZ1461137745880", 
+                    "SubnetId": "subnet-934d48ex", 
+                    "InstanceType": "t2.micro", 
+                    "NetworkInterfaces": [
+                        {
+                            "Status": "in-use", 
+                            "MacAddress": "06:10:99:aa:63:9d", 
+                            "SourceDestCheck": true, 
+                            "VpcId": "vpc-xxxxxxxx", 
+                            "Description": "Primary network interface", 
+                            "NetworkInterfaceId": "eni-0a577e4x", 
+                            "PrivateIpAddresses": [
+                                {
+                                    "PrivateDnsName": "ip-10-0-0-10.ap-northeast-1.compute.internal", 
+                                    "Primary": true, 
+                                    "PrivateIpAddress": "10.0.0.10"
+                                }
+                            ], 
+                            "PrivateDnsName": "ip-10-0-0-10.ap-northeast-1.compute.internal", 
+                            "Attachment": {
+                                "Status": "attached", 
+                                "DeviceIndex": 0, 
+                                "DeleteOnTermination": true, 
+                                "AttachmentId": "eni-attach-42eed3bx", 
+                                "AttachTime": "2016-04-20T07:35:46.000Z"
+                            }, 
+                            "Groups": [
+                                {
+                                    "GroupName": "xxxxx", 
+                                    "GroupId": "sg-8db80eex"
+                                }
+                            ], 
+                            "SubnetId": "subnet-934d48ex", 
+                            "OwnerId": "xxxxxxxxxxxxxx", 
+                            "PrivateIpAddress": "10.0.0.10"
+                        }
+                    ], 
+                    "SourceDestCheck": true, 
+                    "Placement": {
+                        "Tenancy": "default", 
+                        "GroupName": "", 
+                        "AvailabilityZone": "ap-northeast-1a"
+                    }, 
+                    "Hypervisor": "xen", 
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda", 
+                            "Ebs": {
+                                "Status": "attached", 
+                                "DeleteOnTermination": true, 
+                                "VolumeId": "vol-ffa3610x", 
+                                "AttachTime": "2016-04-20T07:35:47.000Z"
+                            }
+                        }
+                    ], 
+                    "Architecture": "x86_64", 
+                    "RootDeviceType": "ebs", 
+                    "RootDeviceName": "/dev/xvda", 
+                    "VirtualizationType": "hvm", 
+                    "Tags": [
+                        {
+                            "Value": "Server1", 
+                            "Key": "Name"
+                        }
+                    ], 
+                    "AmiLaunchIndex": 0
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Microsoft Flowと PowerApps、Power BIで創るVBP（Visual Business Programming）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/default-theme.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-77166665-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: centering
+layout: true
+class: center, middle
+---
+name: coverpage
+background-image: url(img/wankuma_bg_o68.png)
+# Microsoft Flowと PowerApps、Power BIで創るVBP
+　  
+　  
+　  
+Masayoshi Nomura / @nmrmsys　  
+　  
+2016/11/19 わんくま同盟 大阪勉強会 #68  
+???
+VBP（Visual Business Programming）は適当
+---
+class: center, middle
+## スライドはこちらからご覧頂けます。
+[![nmrmsys_github_io](img/nmrmsys_github_io.png)](https://nmrmsys.github.io/)
+???
+参照URLにも簡単にジャンプ出来〼ので、お気軽に～
+---
+layout: false
+## 自己紹介
+.introduce-left[
+### 　■ なまえ： 野村　昌由
+### 　■ 業務システム開発<br>　　とインフラ業
+### 　■ .NETerだけど最近はAWSばっか<br>　　過去は閉鎖環境でツール作成など<br>　　シェル芸は実用主義派、Docker<br>　　Terraformなどにも興味あり
+### 　■ 所属してる会社が絶賛人手不足<br>　　iOS・業務・インフラ・ハード・<br>　　その他スゴ腕エンジニアの方々<br>　　お助け下さい！
+]
+.introduce-right[
+.center[
+[![avator](img/avator.png)](https://twitter.com/nmrmsys)
+### 　@nmrmsys
+]
+]
+???
+本名のローマ字綴りを子音だけにしたもの、アバターは SSR Tim O'Reillyさん<br>
+ オライリーメディアの創立者であり、Web2.0の提唱者の一人でもある<br>
+---
+## 会社紹介
+[![product](img/product_newer.png)](http://www.asx.co.jp/)
+　  
+事業所は、新大阪、新橋、大連にあります。
+???
+昔はアスリーダーつってたけど、海外ではアレなので<br>
+今はアズリーダーって、名乗ってます。<br>
+---
+class: center, middle
+## 最近、東京国際フォーラムにて
+[![ac2016](img/ac2016.png)](http://asx.co.jp/news/info/?p=474)
+## プライベートセミナーを開催しました！
+???
+といっても、名前から想像する様な大規模カンファレンスでは無いです<br>
+---
+## こんなのや
+[![asr-r250](img/asr-r250.png)](https://asreader.jp/catalog/)
+???
+マウント用のマグネット付きジェケット＋本体<br>
+10m以上の長距離交信（タグの種類によりますが）<br>
+Barcode/RFID(UHF)のComboタイプ<br>
+---
+## こんなのや
+[![asr-02xxD](img/asr-02xxD.png)](https://asreader.jp/catalog/)
+???
+１次元・2次元バーコードとUHF帯RFID<br>
+バーコード・RFIDが混在する環境向け<br>
+HF帯RFID(NFC)は医療機器向け<br>
+---
+## こんなのと
+[![asr-box.png](img/asr-box.png)](https://asreader.jp/catalog/)
+???
+アンテナと本体モジュールのセパレート<br>
+本体はLAN接続<br>
+---
+## こんなのも
+[![asr-desktop](img/asr-desktop.png)](https://asreader.jp/catalog/)
+???
+UHF帯RFIDリーダーライターをUSBでPC接続<br>
+リーダーはHID、ライターはUSBシリアル<br>
+---
+[![AsTagFinder](img/AsTagFinder.png)](https://asreader.jp/catalog/)
+## Welcome to the RFID Solution World!!
+???
+タグまでの距離や方向を高精度に測定が可能<br>
+---
+template: centering
+class: inverse
+# ダ　イ　マ　終　了
+???
+随所に闇を折り込んでいくスタイル<br>
+---
+# <br>話は変わって。。。
+???
+闇から光の世界へ<br>
+---
+class: center, middle
+## ネットで見かけた、こんな記事
+[![memo_tyoshida_me](img/memo_tyoshida_me.png)](http://memo.tyoshida.me/powerapps/how-two-students-used-powerbi-powerapps-for-store-management/)
+## 私もリテール業界の常識を覆したい！！
+???
+日本語情報、いつも助かっております！！<br>
+---
+## 内容を詳しく読んで見てみると。。。
+[![memo_tyoshida_me_pic](img/memo_tyoshida_me_pic.png)](http://memo.tyoshida.me/powerapps/how-two-students-used-powerbi-powerapps-for-store-management/)
+## Squareからエクスポートしたデータを<br>OneDriveに上げて連携してるのかー
+???
+偶然にもこの女子高生のお父さんはMSのPM兼PowerBIのエヴァだそうで<br>
+どうもPowerAppsアプリは寄付先登録用でスタンドアローンっぽい<br>
+とはいえ、EUCでモバイルアプリが簡単に作成出来るのはスゴイ便利<br>
+新学期が始まったため HandMeUpsは現在閉店、リテール業界の常識とは？<br>
+---
+class: inverse
+## <br><br><br><br><br><br>連携する度に手動
+## それはちょっと嫌だなって。。。
+???
+やっぱ自動でデータ連携させたいジャン<br>
+---
+## どうする？ アプリを作り込む？
+[![asr-dev](img/asr-dev.png)](https://developer.asreader.jp/)
+## ※弊社バーコードリーダーには<br>　SDKがございます！！
+???
+ダイマは終了したと言ったが、ステマをしないとは言ってない<br>
+---
+## Cordova？ Xamarin？
+![cordova_xamarin](img/cordova_xamarin.png)
+## そんなのも関係したくない！！
+???
+昔ちょっとだけネイティブやってたけど、結局ネイティブの闇にヤラレタ<br>
+---
+class: inverse
+# <br><br><br>悲しいけど
+# 業務SEなのよね。。。
+???
+但しスーパー業務SEは除く<br>
+---
+## それで結局、弊社謹製ブラウザアプリに
+[![AsWeb3](img/AsWeb3.png)](http://apple.co/2elwaVD)
+## 自作のレガシーなWebアプリを添えて ～
+???
+対応iOSのバージョンにより Asweb, Asweb2, Asweb3がある<br>
+---
+## いつものJQueryと今回Knockout初挑戦
+[![AsWebODM](img/AsWebODM.png)](https://github.com/nmrmsys/AsWebODM)
+## データエントリだけは、これでやって<br>後はWeb/クラウドサービスに任せた
+???
+設定やスキャン内容はローカルストレージで保存してるので接続が切れても安心<br>
+---
+# <br><br>ん？ クラウドサービスに<br><br>任せるって、どうやるの？
+???
+可能な限りワザとらしく<br>
+---
+## そこで Microsoft Flow ですよ
+[![MSFlow](img/MSFlow.png)](https://flow.microsoft.com/ja-jp/)
+## 無料でどなたでもお使い頂けます。
+???
+可能な限りドヤ顔で<br>
+---
+## 自分のフローを選択して、一から作成
+![MSFlow1](img/MSFlow1.png)
+## 要求トリガーを追加 JSONスキーマ入力
+???
+Requestを要求に訳してしまうMSのセンスに絶望した<br>
+---
+## 新しいステップを押下、さらに追加から
+![MSFlow2](img/MSFlow2.png)
+## それぞれへの適用の追加を選択したけど<br>それって一体どーなっちゃうの？
+???
+こっちは、それよりさらに酷い翻訳ですね<br>
+---
+## 何とビックリ Apply to each でしたー
+![MSFlow3](img/MSFlow3.png)
+## 明細オブジェクトを選択してループ処理
+???
+何か一時期バグってたのか、ちゃんと動作しなくて焦った記憶<br>
+---
+## アクションの追加で OneDrive上の
+![MSFlow4](img/MSFlow4.png)
+## Excelブックのテーブルへ行挿入
+???
+アクションのタイトルが微妙に分かりづらいの、何とかならんか<br>
+---
+## サインイン情報とファイル・テーブル名
+![MSFlow5](img/MSFlow5.png)
+## フィールドへのセット値を指定した状態
+???
+新しいUIでテーブルを作るの意外と手古摺ったのは内緒<br>
+---
+## 最後に応答アクションで端末への
+![MSFlow6](img/MSFlow6.png)
+## レスポンス設定、デバッグ用に元JSON
+???
+他の人も言ってたけど、ネストしたオブジェクトの取り扱いがが<br>
+---
+## フローの作成で保存すると、要求に
+![MSFlow7](img/MSFlow7.png)
+## データPOST先のURLが生成されている
+???
+このURLを眺めてみると、なるほどなーと<br>
+---
+## フローが有効になってるのを確認して
+![MSFlow8](img/MSFlow8.png)
+## 端末から実際にデータを送信してみよう<br>PCからも試せる、そうWebアプリならね
+???
+ドヤ（ｒｙ<br>
+---
+class: center, middle
+![demo](img/demo.png)
+???
+鬼が出るか、蛇が出るか<br>
+---
+## デモが失敗した時もあろうかと。。。
+![MSFlow9](img/MSFlow9.png)
+## 実行結果はフロー一覧のiマークから<br>状態、開始時刻、期間の確認が可能
+???
+掛けれる保険を掛けておくのはじうやう<br>
+---
+## さらに詳細表示で各アクションごとの
+![MSFlow10](img/MSFlow10.png)
+## 実行状態、実行時間も見ることができ
+???
+この辺は凝り過ぎじゃね？<br>
+---
+## さらにさらに、トリガー・アクションの
+![MSFlow11](img/MSFlow11.png)
+## 入出力パラメータもバッチリ丸見え
+???
+という感も有るが<br>
+---
+## ループ内のアクションはこんな感じで
+![MSFlow12](img/MSFlow12.png)
+## 実行回数分の全ての内容が確認可能
+???
+デバッグには必要か、とも思ったり<br>
+---
+## それで、得られた結果はというと
+![MSFlow13](img/MSFlow13.png)
+## ねっ、簡単でしょ？
+???
+簡単とは言ってない<br>
+---
+template: centering
+.Huge-font[
+閑話<br>休題
+]
+???
+ここからが本当の地獄の始まりだ（違<br>
+---
+# <br>如何にして私が<br>Microsoft Flowを<br>愛する様になったか<br>のお話し
+???
+1/3の異常な愛情<br>
+---
+## その昔、閉鎖環境で作ったりしてた
+[![github_FFT](img/github_FFT.png)](https://github.com/nmrmsys/FFT)
+## ファイル処理用のVBSフレームワークも
+???
+ちょっとしたファイル処理ツールを作るのには、今も便利に使ってる<br>
+---
+## インフラ業を兼任するようになって
+[![qiita_jq_idiom](img/qiita_jq_idiom.png)](http://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1)
+## 使い始め、極めようと思ったシェル芸も
+???
+全ての道はシェル芸に通ず<br>
+---
+class: center
+# <br><br><br>みんな同じ形をしている
+???
+BLEACHより、ワートリが好きです<br>
+---
+class: center
+# <br><br>そうか、全ては<br>データフロー<br>パイプライン<br>&nbspなんだ！
+???
+悟りの境地に達した者、未来は明るい！<br>
+---
+template: centering
+.Huge-font[
+与太話<br>終了
+]
+???
+以下、同じ進行が続きます。苦手な方はブラウザバックで<br>
+---
+# <br>よーく考えよう～<br>データ(ストレージ)は<br>大事だよ～
+???
+アノテーション可能なデータ保存メディアとしては Excelが最強論者<br>
+---
+# Azure SQL Database<br>もいいけどそれ以外もね
+[![azure_sql_database](img/azure_sql_database.png)](https://azure.microsoft.com/ja-jp/services/sql-database/)
+???
+マネージドDBよりも、さらにユーザ寄りでカジュアルなのをくれ<br>
+---
+## オンプレミスデータゲートウェイ
+[![onpre_gateway](img/onpre_gateway.png)](https://azure.microsoft.com/ja-jp/documentation/articles/analysis-services-gateway/)
+## うんうん、それもまたサーバーレスだね
+???
+管理しないといけないサーバの無い、大義のサーバーレス<br>
+---
+## Microsoft共通データサービス
+[![MSCDS](img/MSCDS.png)](https://powerapps.microsoft.com/en-us/blog/powerapps-cds-ga/)
+???
+ベータ時代はMicrosoft共通データモデルって名前でした<br>
+---
+## 簡単に言うとWebで使えるAccess
+![MSCDS2](img/MSCDS2.png)
+???
+正式公開でブラウザ上からもデータメンテ出来るようになって大満足<br>
+---
+template: centering
+.large-font[
+よぉーし　　<br>君に決めた！
+]
+???
+ティンと来てたのに。。。<br>
+---
+template: centering
+class: inverse
+# ところがぎっちょん
+# プレミアム(有償)
+# プランです！!
+???
+良いものにはお金を払おう（血涙<br>
+---
+## Offce 365 Bussinesを個人で契約して
+[![office365_bussiness](img/office365_bussiness.png)](https://products.office.com/ja-jp/business/compare-office-365-for-business-plans)
+## 試用版でも1ヶ月くらいは試せます。
+???
+延長申請すれば、さらに倍<br>
+---
+## 嘘...だろ...？ CDSはo365だと  有償！？
+[![PowerApps_price](img/PowerApps_price.png)](https://powerapps.microsoft.com/ja-jp/pricing/)
+## しかもオンプレゲートウェイも不可
+???
+複数環境対応とか配布の考慮あるけど、CDSの為だけにこの金額は。。。<br>
+---
+## MicrosoftFlowも有償プランが必要とか
+[![MSFlow_price](img/MSFlow_price.png)](https://flow.microsoft.com/ja-jp/pricing/)
+## 今使えてるのはβプレビュー者だから？
+???
+セット割りとか無いのかな。。。世間は厳しい！！<br>
+---
+## ともあれPowerAppsの基本機能は使用可
+[![PowerApps](img/PowerApps.png)](https://powerapps.microsoft.com/ja-jp/)
+## データソース選択は後日考えるとして
+???
+まあジッサイ、これだけでもスゴイ事なのだけれど<br>
+---
+## その後の調べでSharePointOnlineの
+[![SharePointCustomList](img/SharePointCustomList.png)](https://blogs.technet.microsoft.com/microsoft_office_/2016/08/05/modern-sharepoint-lists-are-here-including-integration-with-microsoft-flow-and-powerapps/)
+## カスタムリストを使うのが良さそう
+???
+Offce 365 Bussines Premiumで契約すると、Windowsクライアント版のAccessが使えて<br>
+https://blogs.technet.microsoft.com/microsoft_office_/2016/11/09/microsoft-access-now-included-in-office-365-business-and-business-premium-with-new-enhancements/<br>
+そちらでも SharePointOnlineのカスタムリストをリンクテーブルとしてアタッチ可能<br>
+http://qiita.com/muramoto_jp/items/be9702663e2e3a3fbbe3<br>
+---
+## クラウドサービスと連携自在の
+[![PowerApps1](img/PowerApps1.png)](https://powerapps.microsoft.com/ja-jp/tutorials/getting-started/)
+## モバイル対応なRAD環境が今ここに
+???
+RADはRapid Application Development、つまり超高速開発<br>
+Delphi RAD Studio（遠い目<br>
+---
+## デザインツールはWindows10版と
+[![PowerApps2](img/PowerApps2.png)](https://powerapps.microsoft.com/ja-jp/downloads/)
+## まだプレビュー状態のWeb版がある
+???
+サンプルアプリのコードが見れないのはWeb版の未実装だと思ってたら、そうじゃない？<br>
+---
+## Web版の画面はこんな感じ
+[![PowerApps3](img/PowerApps3.png)](http://memo.tyoshida.me/powerapps/powerapps-studio-for-web-preview-released/)
+## VBライクだが、データ処理などは独特
+???
+VBライクというのも、最近はもうこれ分かんねえな？だけど<br>
+PowerAppsの特色は値設定のデフォルトが数式というのに尽きる<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/working-with-variables/<br>
+<br>
+つまりアプリの様な顔をしてるが、コイツは実質的にはExcelシートとほぼ等価の存在で<br>
+各コントロールはセル、そこに数式でデータバインドしてファンクショナルな挙動を取らせる<br>
+必然的にデータソースへの操作もSQLでは無くなり、ワークシート関数を用いる事になっている<br>
+あ、勿論この方式しか無い訳で無く、イベントハンドラからの変数操作も書こうと思えば書ける<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/working-with-tables/<br>
+<br>
+昔そんな感じのExcelシートアプリ化を考えてたので、やっぱ有りだよなーと思ったりしたけど<br>
+何でこの方式を採用したのかを想像すると、開発ツールなのにリボンUIを採用してる所からしても<br>
+純粋にビジネスユーザーの為のツールを追求した結果こうなってるのに哲学を観て宇宙を感じるｗ<br>
+<br>
+Gallery, Display form, Edit formコントロールで典型的な画面パターンの構築を行うのが基本で<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/working-with-forms/<br>
+<br>
+使えるコントロールの種類はこれぐらいで、実際の配置・プロパティ設定はこんな感じ<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/add-configure-controls/<br>
+<br>
+データを使用して開始を選択すると上記3画面パターンを自動仮生成した状態で始まるが<br>
+空のアプリを選択して、同様の画面デザインを行うには、下記の手順を参照<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/get-started-create-from-blank/<br>
+<br>
+コントロールと関数のリファレンスとか<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/reference-properties/<br>
+https://powerapps.microsoft.com/ja-jp/tutorials/formula-reference/<br>
+---
+# <br><br>なぜ、MSはこれらの<br>ツール群を創ったのか？
+???
+ガイアの夜明けOP風<br>
+---
+## これが、そのツール群の全体像だ！
+[![BizAppPlatInnov](img/BizAppPlatInnov.png)](https://businessplatform.microsoft.com/en-us/)
+## モダンな業務アプリを高速に構築する
+???
+そして、それはビジネスの現場に立つ力を持った人々だと<br>
+---
+## 我々開発者は、その領域を拡張させる
+[![blogahf_blogspot_jp](img/blogahf_blogspot_jp.png)](http://blogahf.blogspot.jp/2016/05/logicapps-powerapps-flow_3.html)
+## LogicAppsはFlowの自由度が高いもの
+???
+熱く生きていこうぜ、真っ直ぐにYO<br>
+---
+## 我々開発者は、その領域を拡張させる
+[![logicapps_apiapps](img/logicapps_apiapps.png)](http://www.slideshare.net/harutama/logic-apps-api-apps)
+## ApiAppsでトリガー・アクションを実装
+???
+以上、スペシャルサンクス的なヤツでした<br>
+---
+template: centering
+class: inverse
+# ー最終章ー
+# “データの向こう側”へ
+???
+何でか、このページだけChromePDFに保存からのパワポ変換でレイアウトが崩れる。。。<br>
+---
+## 業務データ利用の最後のピース
+[![PowerBI](img/PowerBI.png)](https://powerbi.microsoft.com/ja-jp/)
+## ユーザー対話型のセルフサービスBI
+???
+データの民主化とか、その辺<br>
+社畜マインドだとBI何それ美味しいの？ってなるのが切ない<br>
+---
+## ファイル、DB、サービスを問わず
+[![PowerBI1](img/PowerBI1.png)](https://powerbi.microsoft.com/ja-jp/guided-learning/powerbi-learning-0-0-what-is-power-bi/)
+## データソースとして、視覚化・分析
+???
+GitHubをデータソースにする事も出来たり<br>
+https://powerbi.microsoft.com/ja-jp/guided-learning/powerbi-learning-0-3-dashboards-cloud-services/<br>
+---
+## リレーションビューで仮想データ統合
+[![PowerBI2](img/PowerBI2.png)](https://powerbi.microsoft.com/ja-jp/documentation/powerbi-desktop-relationship-view/)
+## そして、いずれはエンタープライズDBへ
+???
+DOA界隈の皆さん、お元気ですかーっ！<br>
+---
+class: inverse
+### <br><br><br>良い質問とは、正しい答えを求めるものではない<br>良い質問とは、すぐには答えが見つからない<br>良い質問とは、現在の答えに挑むものだ<br>良い質問とは、思考の新しい領域を創り出すものだ
+### 良い質問とは、その答えの枠組み自体を変えてしまうものだ<br>良い質問とは、さらに他の良い質問をたくさん生み出すものだ<br>良い質問とは、マシンが最後までできないかもしれないものだ<br>良い質問とは、人間だからこそできるものだ
+### Kevin Kelly - The Inevitable: Understanding the 12<br>Technological Forces That Will Shape Our Future<br><br>Chapter 11, QUESTIONING
+???
+※今日紹介したツール群が実業務に耐えうるかは未知数であり、各個人で地雷を踏み抜いていくしかありません<br>
+お言葉はケヴィン・ケリーさんの「〈インターネット〉の次に来るもの―未来を決める12の法則」から<br>
+とても示唆的な本なので、皆さんも読んでみると宜しいかと https://www.amazon.co.jp/dp/4140817046/<br>
+
+
+    </textarea>
+    <script src="js/remark-0.6.5.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'bash',
+        highlightStyle: 'sunburst'
+      });
+    </script>
+  </body>
+</html>
