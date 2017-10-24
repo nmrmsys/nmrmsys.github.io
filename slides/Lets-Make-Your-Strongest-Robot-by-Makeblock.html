@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Makeblockでキミだけの最強ロボットをつくろう！</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/default-theme.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-77166665-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: centering
+layout: true
+class: center, middle
+---
+name: coverpage
+# Makeblockでキミだけの<br>最強ロボットを作ろう！
+　  
+　  
+　  
+Masayoshi Nomura / @nmrmsys　  
+　  
+2017/10/26 ルービーの会LT大会
+---
+background-image: url(img/makeblock_bg.png)
+[![makeblock_store](img/transparent.png)](http://store.makeblock.com/)
+---
+layout: false
+## 自己紹介
+.introduce-left[
+### 　■ なまえ： 野村 昌由
+### 　■ 業務システム開発<br>　　とネットワークサーバ構築管理
+### 　■ 開発に復帰したはずがインフラ<br>　　シェル芸は実用主義派、Docker<br>　　Rancher、PostgreSQL、直近は<br>　　監視ツール、時系列DB、IoTなど
+### 　■ 所属してる会社が絶賛人手不足<br>　　iOS・業務・インフラ・ハード・<br>　　その他スゴ腕エンジニアの方々<br>　　お助け下さい！&#x1f41f;
+]
+.introduce-right[
+.center[
+![avator](img/avator.png)
+### 　@nmrmsys
+]
+]
+???
+本名のローマ字綴りを子音だけにしたもの、アバターは Tim O'Reillyさん Web2.0
+---
+## 会社紹介
+[![product](img/product_newer.png)](http://www.asx.co.jp/)
+　  
+事業所は、新大阪、新橋、大連、ロス辺りにあります。
+---
+class: center
+## mBot: 初心者向けロボットキット
+[![makeblock_mBot](img/makeblock_mBot.png)](http://store.makeblock.com/jp/product/mbot-robot-kit)
+## 赤外線RC、ライントレース、障害物検知
+---
+## ｍCore: Arduino Unoベースのメイン基盤
+[![makeblock_mcore](img/makeblock_mcore.png)](https://makeblockshop.eu/products/makeblock-mcore-controller-board-for-mbot)
+## ブザー、光センサ、多色LEDなどが追加
+---
+## 付属のリモコンがちっさくてかわよい
+[![makeblock_remocon](img/makeblock_remocon.png)](http://download.makeblock.com/mbot/mBot_V1.1_Blue_STD_Instruction_EN_D1.2.1_7.40.4100_Print.pdf#page=15)
+## 自分で作ったプログラムも割り当て可能
+---
+class: center
+## 拡張センサー、サーボ、電子モジュール
+[![makeblock_elemodules](img/makeblock_elemodules.png)](http://store.makeblock.com/p/elctronic-modules)
+## RJ25コネクタの汎用ポートへ簡単接続
+---
+class: center
+## 拡張メカニカルパーツ　
+[![makeblock_mechaparts](img/makeblock_mechaparts.png)](http://store.makeblock.com/mechanical-robot-kit-series-STEM)
+## 　現在、国内では単品入手困難で残念
+---
+## キット製品の上位版は販売してるので
+[![makeblock_lineup](img/makeblock_lineup.png)](http://store.makeblock.com/p/robot-kit-series-stem)
+## そこから部品取りなどするしか無さげ
+---
+class: center
+## ロボット関連のソフトウェアは3種類
+[![makeblock_software](img/makeblock_software.png)](http://jp.makeblock.com/products/software.html)
+## Scratchベースのブロックプログラミング
+---
+## mBlock for PC
+[![makeblock_mBlockPC1](img/makeblock_mBlockPC1.png)](http://www.mblock.cc/)
+## Linux版(Debian/Ubuntu用)もあるらしい
+---
+## 簡単に試すにはダウンロードページの
+[![makeblock_mBlockPC2](img/makeblock_mBlockPC2.png)](http://www.mblock.cc/download/)
+## 赤枠のリンクをクリックすると・・
+---
+## なんと PC版とほぼ互換のブラウザ版が
+[![makeblock_mBlockPC3](img/makeblock_mBlockPC3.png)](http://editor.makeblock.com/ide.html)
+## mBot用ブロックが追加されたScratch
+---
+## Arduinoモードでブロックがコードに変換
+[![makeblock_mBlockPC4](img/makeblock_mBlockPC4.png)](http://editor.makeblock.com/ide.html)
+## プラグインでアップロード機能も使える
+---
+## mBlock for Mobile
+[![makeblock_mBlockApp1](img/makeblock_mBlockApp1.png)](http://jp.makeblock.com/products/software.html)
+## スマホ・タブレット向けアプリ
+---
+## 学習用ストーリーモードが入ってる
+[![makeblock_mBlockApp2](img/makeblock_mBlockApp2.png)](https://play.google.com/store/apps/details?id=com.makerworks.medu)
+---
+## mBot専用なので PC版よりシンプル
+[![makeblock_mBlockApp3](img/makeblock_mBlockApp3.png)](https://play.google.com/store/apps/details?id=com.makerworks.medu)
+---
+## カスタム操作パネル作成用のアプリ
+[![makeblock_MakeblockApp1](img/makeblock_MakeblockApp1.png)](http://jp.makeblock.com/products/software.html)
+## 複数の処理の登録、呼び出し等が出来る
+---
+## ブランク画面にボタン、レバーなどの
+[![makeblock_MakeblockApp3](img/makeblock_MakeblockApp3.png)](https://play.google.com/store/apps/details?id=cc.makeblock.makeblock)
+## GUI部品を自由に配置しておいて
+---
+## 操作時に実行される処理を設定する
+[![makeblock_MakeblockApp4](img/makeblock_MakeblockApp4.png)](https://play.google.com/store/apps/details?id=cc.makeblock.makeblock)
+## それぞれにブロックプログラミングで
+---
+## キット各フォーム向けのパネルもあるが
+[![makeblock_MakeblockApp2](img/makeblock_MakeblockApp2.png)](https://play.google.com/store/apps/details?id=cc.makeblock.makeblock)
+## 設定内容を見れないのがいろいろ不便
+---
+## 開発者向けリソースもわりと充実
+[![makeblock_forDeveloper](img/makeblock_forDeveloper.png)](http://learn.makeblock.com/en/for-developer/)
+## 仕組みを理解して、さらにその先へ
+---
+## 便利ライブラリもいろいろあったりで
+[![makeblock_mbot_nodebots](img/makeblock_mbot_nodebots.png)](https://github.com/Makeblock-official/mbot_nodebots)
+## PCからJavaScriptでmBotを制御するなど
+---
+## どうも日本市場で苦戦されてるぽいので
+[![makeblock_japan](img/makeblock_japan.png)](https://prw.kyodonews.jp/opn/release/201707103527/)
+## そこのところ、よろしくMakeblock !!
+---
+## なんで STEM教育が大事なのかよ
+[![free_to_make1](img/free_to_make1.png)](https://www.oreilly.co.jp/books/9784873118123/)
+---
+class: center
+## 　
+[![free_to_make2](img/free_to_make2.png)](https://www.amazon.com/dp/1623170745/)
+## 　
+
+    </textarea>
+    <script src="js/remark-0.6.5.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'bash',
+        highlightStyle: 'sunburst'
+      });
+    </script>
+  </body>
+</html>
