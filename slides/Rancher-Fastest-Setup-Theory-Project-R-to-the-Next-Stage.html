@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rancher最速セットアップ理論 プロジェクトR to the Next Stage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/default-theme.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-77166665-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: centering
+layout: true
+class: center, middle
+---
+name: coverpage
+background-image: url(img/black.png)
+.white[# Rancher最速<br>セットアップ理論<br>プロジェクト.red[R]<br>to the Next Stage
+　  
+　  
+　  
+Masayoshi Nomura / @nmrmsys　  
+　  
+2018/01/25 Rancher Meetup #03 in Osaka]
+---
+layout: false
+## 自己紹介
+.introduce-left[
+### 　■ なまえ： 野村 昌由
+### 　■ 業務システム開発<br>　　とインフラ業
+### 　■ 開発に復帰したはずがインフラ<br>　　シェル芸は実用主義派、Docker<br>　　Rancher、最近はPostgreSQL、<br>　　時系列DB、データ分析、IoTも
+### 　■ 所属してる会社が絶賛人手不足<br>　　iOS・業務・インフラ・ハード・<br>　　その他スゴ腕エンジニアの方々<br>　　お助け下さい！&#x1f41f;
+]
+.introduce-right[
+.center[
+[![avator](img/avator.png)](https://nmrmsys.github.io/)
+### 　@nmrmsys
+]
+]
+???
+本名のローマ字綴りを子音だけにしたもの、アバターは Tim O'Reillyさん Web2.0
+---
+## 会社紹介
+[![product](img/product_newer.png)](http://www.asx.co.jp/)
+　  
+事業所は、新大阪、新橋、大連、ロス辺りにあります。
+---
+# 今日話す内容
+- ## AWSでCloudFormationを使って<br>Rancher環境をサクッと作る方法
+- ## RancherOSの Community AMIへ<br>cloud-initで Serverをセットアップ
+- ## 起動スクリプトで Customホスト追加<br>エージェント実行する所まで自動化
+???
+Marketplace AMI、Subscribeが必要
+---
+## まずはここから
+[![RancherGT-R](img/RancherGT-R.png)](https://github.com/nmrmsys/cloudformation/tree/master/RancherGT-R)
+## Rancherを最速でセットアップする奴
+---
+# なぜ最小構成か
+- ## Rancherは主に検証環境で利用する為<br>作業後は簡単スタック停止/削除したい
+- ## 最小構成であれば必要な時だけの<br>スケールアップ・ダウンもかなり自由
+- ## ネットワーク設定等も複雑にならず<br>考える事が少なくなって取り回しが楽
+---
+## CloudFormationでインスタンス作成
+```xml
+AWSTemplateFormatVersion: 2010-09-09
+Description: Rancher Server Explosion Speed Stack
+
+# Create Stack
+Resources:
+  RancherServer: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: !FindInMap [RancherAMI, !Ref 'AWS::Region', OsOnly]
+      InstanceType: !Ref ServerInstanceType
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds: [!Ref RancherServerSG]
+      KeyName: !Ref KeyName
+      Tags: 
+        - Key: Name
+          Value: rancher-server
+      Monitoring: True
+      UserData:
+        Fn::Base64: !Sub |
+          #cloud-config
+``` 
+## こちらもなるべく最小限の設定で
+---
+## RancherOSのComunityイメージ
+```xml
+Mappings:
+  RancherAMI: # v1.1.3-hvm-1
+    ap-northeast-1:
+      OsOnly: ami-a873edce
+    ap-northeast-2:
+      OsOnly: ami-e8af0f86
+    ap-south-1:
+      OsOnly: ami-74a0f41b
+``` 
+[![RancherOS-AMI](img/RancherOS-AMI.png)](https://github.com/rancher/os)
+---
+## AWS EC2でのcloud-init設定方法
+```xml
+UserData:
+  Fn::Base64: !Sub |
+    #cloud-config
+
+    rancher:
+      services:
+        rancher-server:
+          image: rancher/server
+          restart: unless-stopped
+          ports:
+            - 8080:8080
+
+    runcmd:
+      - echo `date` "runcmd" >> /var/lib/rancher/rancher_server_setup.log
+``` 
+## Serverサービス起動、コマンド実行
+---
+## 起動スクリプトにファイル書き込み
+```xml
+write_files:
+  - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      echo `date` "rc.local before" >> /var/lib/rancher/rancher_server_setup.log
+      nohup /var/lib/rancher/rancher_server_setup.sh &
+      echo `date` "rc.local after" >> /var/lib/rancher/rancher_server_setup.log
+
+  - path: /var/lib/rancher/rancher_server_setup.sh
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      echo `date` "rancher_server_setup before" >> /var/lib/rancher/rancher_server_setup.log
+      if [ ! -e /var/lib/rancher/rancher_server_setup.done ]; then
+        echo `date` "rancher_server_setup.done false" >> /var/lib/rancher/rancher_server_setup.log
+        wait-for-docker #>> /var/lib/rancher/rancher_server_setup.log
+        echo `date` "wait-for-docker done" >> /var/lib/rancher/rancher_server_setup.log
+``` 
+## セットアップスクリプトの実行を記述
+---
+## セットアップ判定、サービス起動待ち
+```shell
+#!/bin/bash
+echo `date` "rancher_server_setup before" >> /var/lib/rancher/rancher_server_setup.log
+if [ ! -e /var/lib/rancher/rancher_server_setup.done ]; then
+  echo `date` "rancher_server_setup.done false" >> /var/lib/rancher/rancher_server_setup.log
+  wait-for-docker #>> /var/lib/rancher/rancher_server_setup.log
+  echo `date` "wait-for-docker done" >> /var/lib/rancher/rancher_server_setup.log
+  
+  cnt="0"
+  while [ "$cnt" = "0" ]
+  do
+    sleep 5
+    cnt=`docker ps | grep "rancher/server" | grep -v grep | wc -l`
+    #echo `date` "rancher/server check: $cnt"  >> /var/lib/rancher/rancher_server_setup.log
+  done
+  echo `date` "rancher/server check done"  >> /var/lib/rancher/rancher_server_setup.log
+``` 
+## wait-for-dockerは UserDocker起動待ち
+---
+## API実行許可待ち、ホスト登録URL設定
+```shell
+cnt="0"
+while [ "$cnt" = "0" ]
+do
+  sleep 5
+  cnt=`wget https://localhost:8080/v2-beta/registrationtokens -qO - | jq -r .links.self | wc -l`
+  #echo `date` "registrationtokens check: $cnt"  >> /var/lib/rancher/rancher_server_setup.log
+done
+echo `date` "registrationtokens done"  >> /var/lib/rancher/rancher_server_setup.log
+
+sip=`wget http://169.254.169.254/latest/meta-data/public-ipv4 -qO -`
+
+docker run --rm appropriate/curl -ik 'https://'$sip':8080/v2-beta/settings/api.host' \
+  -X PUT  -H 'content-type: application/json' \
+  -d '{"id":"api.host","type":"activeSetting","baseType":"setting","name":"api.host",
+       "activeValue":null,"inDb":false,"source":null,"value":"http://'$sip':8080"}'  \
+  >> /var/lib/rancher/curl.log
+echo `date` "api host setting done"  >> /var/lib/rancher/rancher_server_setup.log
+``` 
+## RancherOSのwgetはbusyboxコマンドで<br>GETしか出来ないのでcurlのイメージ使用
+---
+## Customホスト設定、エージェント実行
+```shell
+docker run --rm appropriate/curl -ik \
+  'https://'$sip':8080/v2-beta/projects/1a5/registrationtoken' \
+  -X POST -H 'content-type: application/json' -d '{"type":"registrationToken"}'
+echo `date` "custom host registrationtoken done"  >> /var/lib/rancher/rancher_server_setup.log
+
+cnt="0"
+while [ "$cnt" = "0" ]
+do
+  sleep 5
+  cnt=`wget https://localhost:8080/v2-beta/registrationtokens -qO - | jq -r .data[].command | wc -l`
+  #echo `date` "run agent command check: $cnt"  >> /var/lib/rancher/rancher_server_setup.log
+done
+
+cmd=`wget https://localhost:8080/v2-beta/registrationtokens -qO - | jq -r .data[].command`
+$cmd
+echo `date` "run agent command done"  >> /var/lib/rancher/rancher_server_setup.log
+touch /var/lib/rancher/rancher_server_setup.done
+``` 
+## 完了したらセットアップ済ファイル作成
+---
+## それでは実際に走らせてみましょう！
+[![chicken_race](img/chicken_race.png)](https://github.com/nmrmsys/cloudformation/tree/master/RancherGT-R)
+---
+## c4.8xlargeで 3～4分くらいで起動
+```xml
+# cat rancher_server_setup.log   
+Thu Jan 18 06:37:26 UTC 2018 runcmd                            
+Thu Jan 18 06:37:26 UTC 2018 rc.local before                   
+Thu Jan 18 06:37:26 UTC 2018 rc.local after                    
+Thu Jan 18 06:37:26 UTC 2018 rancher_server_setup before       
+Thu Jan 18 06:37:26 UTC 2018 rancher_server_setup.done false   
+Thu Jan 18 06:37:30 UTC 2018 wait-for-docker done              
+Thu Jan 18 06:38:10 UTC 2018 rancher/server check done         
+Thu Jan 18 06:38:50 UTC 2018 registrationtokens done           
+Thu Jan 18 06:38:55 UTC 2018 api host setting done             
+Thu Jan 18 06:38:56 UTC 2018 custom host registrationtoken done
+Thu Jan 18 06:39:18 UTC 2018 run agent command done            
+Thu Jan 18 06:39:18 UTC 2018 rancher_server_setup after        
+``` 
+## ｍ4.largeなら 7～8分といった所
+---
+# まとめ
+- ## cloud-initを使えば Rancherの<br>ほとんどの初期設定を自動化出来る
+- ## RancherOSはサービスがコンテナで<br>Serverやカスタムサービスも起動可能
+- ## AWS CLIから実行すれば Rancherは<br>コマンド一撃でセットアップ可能！
+
+    </textarea>
+    <script src="js/remark-0.6.5.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'bash',
+        highlightStyle: 'sunburst'
+      });
+    </script>
+  </body>
+</html>

@@ -43,6 +43,7 @@ h4 {
 }
 li p { line-height: 1.25em; }
 .red { color: #fa0000; }
+.white { color: #ffffff; }
 .large { font-size: 2em; }
 a, a > code {
   color: rgb(19, 235, 54);
