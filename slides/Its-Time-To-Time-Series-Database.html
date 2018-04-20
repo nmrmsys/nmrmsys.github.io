@@ -34,7 +34,7 @@ layout: false
 .introduce-left[
 ### 　■ なまえ： 野村 昌由
 ### 　■ 業務システム開発</br>　　とインフラ業
-### 　■ 開発に復帰したはずがインフラ</br>　　シェル芸は実用主義派、Docker</br>　　Rancher、最近はPostgreSQL、</br>　　時系列DB、データ分析、IoTも
+### 　■ 今度こそ開発に戻れるかも！？</br>　　シェル芸は実用主義派、Docker</br>　　Rancher、PostgreSQL移行中、</br>　　時系列DB、データ分析、IoT等
 ]
 .introduce-right[
 .center[
@@ -43,7 +43,8 @@ layout: false
 ]
 ]
 ???
-本名のローマ字綴りを子音だけにしたもの、アバターは Tim O'Reillyさん Web2.0
+本名のローマ字綴りを子音だけにしたもの、アバターは Tim O'Reillyさん Web2.0</br>
+この資料の大体の画像には元情報への参照リンクが張ってあるので公開後に見てね</br>
 ---
 ## 時系列(Time Series)DBとは
 ```xml
@@ -68,23 +69,41 @@ time                      location   scientist        butterflies   honeybees
 2015-08-18T06:36:00Z      2          perpetua         8             21
 ```
 ## プライマリキーがタイムスタンプ
+???
+今日は学生さんが多数お越しで、わかり易くとのオーダーが出てますので、もうちょっと説明しますと</br>
+蝶と蜜蜂の個体数調査、場所と学者が二か所二人</br>
+プライマリキーというのは、日本語で主キーですから、各データ行が日時で記録識別されるDBというものです。</br>
 ---
 ## RDBじゃダメなんですか？
 [![Btree](img/Btree.png)](https://ja.wikipedia.org/wiki/B%2B%E6%9C%A8)
 ## 一般的なB+treeでは大量の挿入で限界
+???
+Btreeインデックス、索引はキー値を二分探索で見つけ出す為の情報</br>
+レコード数が多くなればなるほど、ディスクへのランダムアクセスが多くなるのが原因</br>
 ---
 ## NoSQL(KVS)では[LSM-Tree](http://tattsun.hateblo.jp/entry/2016/02/13/163207)なるものが
 [![LSMtree](img/LSMtree.png)](https://www.slideshare.net/DmitriBabaev1/cassnadra-vs-hbase/4)
 ## シーケンシャルに書き込みが出来て高速
+???
+NoSQLてのは SQL/RDBとは違うんですよ！といいたいバズワード</br>
+キーバリューストアはメモリ上にキーと値を置いて探せば早いやんMemTableのとこ</br>
+SSTableのSSはSortedStringの略で定期的なコンパクション処理でマージソートしてまとめられる</br>
 ---
 ## InfluxDBはそれをさらに改良して
 </br>
 [![TSMtree](img/TSMtree.png)](https://yakst.com/ja/posts/3327)
 </br>
 ## より時系列DBに最適化したのを実装
+???
+列指向カラムナーDB、列数が増えてもパフォーマンス影響が少ない、データ圧縮が掛かり易い</br>
+時系列の連続データの圧縮方法はいろいろあるが、正直よくわからんので割愛</br>
 ---
 ## おかげさまで業界シェア3年連続No1！
 [![TSDBranking](img/TSDBranking.png)](https://db-engines.com/en/ranking/time+series+dbms)
+???
+横のグラフの青い線がInfluxDB</br>
+RRDtoolとかGraphiteとかPrometheusとかサーバ監視ツール由来のものが多い印象</br>
+Multi-modelのeXtremeDBとか私がもう一つ気になってるTimescaleDBってのもあって</br>
 ---
 ## PostgreSQL拡張で実現したのもあるけど
 </br>
@@ -93,12 +112,18 @@ time                      location   scientist        butterflies   honeybees
 </br>
 </br>
 ## 欲しい機能は他にもいろいろあるんじゃ
+???
+Chunkと呼ばれる時系列の断片を繋ぎ合わせて一つのHypertableとして扱えるようにしている</br>
+TimescaleDBは時系列データテーブルじゃないテーブルも同じDBで使えてジョインなども出来るのが売り</br>
+ならば InfluxDBは？という事になるのですが</br>
 ---
 ## その辺は去年末のアドカレに書いたので
 </br>
 [![qiita_InfluxDB](img/qiita_InfluxDB.png)](https://qiita.com/nmrmsys/items/cdeb4afa76c591acfd3f)
 </br>
 ## 詳細はQiitaで！ではあんまり過ぎるので
+???
+この NoSQL & NewSQL Advent Calendarは他にも変わったDBが色々紹介されてて面白い
 ---
 ## 重要なポイントだけ順に上げていくと
 ## 時間範囲を考慮した集計
@@ -117,12 +142,19 @@ WHERE time >= '2015-09-18T16:00:00Z' AND time <= '2015-09-18T16:42:00Z'
 GROUP BY time(12m,3m),location fill(0)
 ```
 ## 集計する時間間隔、開始オフセット、</br>時間間隔内にデータが存在しなかった</br>場合に何をセットするか
+???
+ヌル、数値指定、線形補完、ポイント無し、前データ値
 ---
 ## 分析に役立つ組込み関数群
 ### 集計関数は COUNT(), DISTINCT(), SUM() の他に</br>　INTEGRAL(), MEAN(), MEDIAN(), MODE(),</br>　SPREAD(), STDDEV()
 ### 選択関数は MIN(), MAX() の他に</br>　FIRST(), LAST(), TOP(), BOTTOM(),</br>　 PERCENTILE(), SAMPLE()
 ### 変換関数として　CUMULATIVE_SUM(), DERIVATIVE(),</br>　DIFFERENCE(), ELAPSED(), MOVING_AVERAGE(),</br>　NON_NEGATIVE_DERIVATIVE(),</br>　NON_NEGATIVE_DIFFERENCE()
 ### 予測関数として　HOLT_WINTERS()
+???
+積分、平均、中央、最頻、差分、標準偏差</br>
+最古、最新、上位、下位、百分位、サンプリング</br>
+累積和、導関数、差分、経過時間、移動平均、非負導関数、非負差分</br>
+ホルト・ウィンタース法、過去データを元にトレンドや季節のパターンから予測</br>
 ---
 ## データ期限廃棄とダウンサンプリング
 ```sql
@@ -162,21 +194,48 @@ INSERT weather,location=us-midwest temperature=50
 SELECT * INTO weather_copy FROM weather
 ```
 ## かなりSQLに似せた InfluxQLが入り易い
+???
+HTTP APIからは上記のLINEプロトコル形式のレコードをバルクで受け取れる</br>
+フィールド定義を行わず、後からのデータ追加で自由に項目追加が可能、必須項目の指定も無い</br>
 ---
 ## TICK Stackというのが構築されてて
 [![tick-stack_components](img/tick-stack_components.png)](https://www.influxdata.com/time-series-platform/)
+???
+この辺のネーミングセンスがかなり好きで、時系列データプラットフォームで tick-stackとか</br>
+InfluxDBの Influxは流入って意味、Kapacitorも後で説明しますが言い得て妙だなと</br>
+全てのコンポーネントがGoで作られていて、開発コミュニティも活発で今時っぽいなーと</br>
 ---
 ## Telegraf 多機能簡単設置のエージェント
 [![tick-stack_telegraf](img/tick-stack_telegraf.png)](https://github.com/influxdata/telegraf)
 ## execとか汎用的に使えるプラグインも
+???
+GO製の単一バイナリに設定ファイルで監視したいサービスのプラグインを有効化する方式</br>
+書いたプラグインはビルドに取り込まれないと使えないのでコントリビューションが活発化する仕組み</br>
 ---
 ## Chronograf 初期設定不要の可視化
 [![tick-stack_chronograf](img/tick-stack_chronograf.png)](https://docs.influxdata.com/chronograf/v1.3/)
-## TICK Stackの大体の設定もここから可能
+## TICK Stackの基本の設定はここから可能
+???
+特に何も設定しなくとも Telegrafでデータが送られて来ているホスト一覧と主要な監視項目のグラフは見れる</br>
+データエクスプローラーでカスタムクエリのプレビュー実行、満足したらカスタムダッシュボードを作成</br>
+特定の閾値を超えたらアラート通知する設定や、一定期間ごとにデータ処理をおこなうバッチ設定</br>
+DB管理やユーザ管理</br>
 ---
 ## Kapacitor 時系列データコンデンサ
 [![tick-stack_kapacitor](img/tick-stack_kapacitor.png)](https://docs.influxdata.com/kapacitor/v1.3/introduction/getting_started/#a-real-world-example)
 ## 時系列ストリームを溜めたり放出したり
+???
+コンデンサー、スペルをもじってある、CQに似た機能だがさらに高機能</br>
+閾値を超えたらアラート通知したり、データを集計加工して別テーブルに保存等</br>
+TICKscript、メソッドチェインとデータパイプライン記述、streamとbatch</br>
+sigmaは標準偏差を求める、どれぐらい大きくグラフが動いたか？</br>
+---
+## 公式のTICK-dockerが放置されてる？
+[![tick-stack_catalog](img/tick-stack_catalog.png)](https://github.com/nmrmsys/rancher-catalog/tree/master/templates/tick-stack/4)
+???
+Dockerイメージはリリースごとに更新されてるので、後は各自でって事なのか</br>
+何にせよ不便なので docker-composeコマンド一発でサクっと起動するテンプレート</br>
+いろいろ変更を試してみる時に楽な様に設定ファイルを一つのコンテナにまとめてある</br>
 ---
 ## InfluxDataの製品ページが激アツなので
 </br>
@@ -205,6 +264,7 @@ SELECT * INTO weather_copy FROM weather
 [![IFQL_Imports_and_Namespaces](img/IFQL_Imports_and_Namespaces.png)](https://speakerdeck.com/pauldix/ifql-and-the-future-of-influxdata?slide=123)
 ## その為には SQLもTICKscriptも捨てる
 ???
+引数が名前付き引数、TICKscriptのパイプ指定がElixir由来のパイプライン演算子、入力が暗黙の第一引数</br>
 IFQL</br>
 　SQLとの互換性</br>
 　　クエリ言語の進化</br>
@@ -220,6 +280,7 @@ IFQL</br>
 　　加速度重視</br>
 　　クエリ言語とエンジンを分離</br>
 　UI、可読性、追加への柔軟性、テスト容易性、コントリビュート性、コード共有再利用</br>
+  Telegrafでの成功体験</br>
 ---
 class: center, middle, inverse
 ## This is just the beginning.
