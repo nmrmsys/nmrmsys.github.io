@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>発掘、邪道シェル芸ツールズ｜！</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/default-theme.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-77166665-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: centering
+layout: true
+class: center, middle
+---
+name: coverpage
+class: inverse
+# 発掘、邪道シェル芸
+# ツールズ｜！
+　  
+　  
+　  
+Masayoshi Nomura / @nmrmsys　  
+　  
+2019/04/27 第41回 シェル芸勉強会 大阪サテライト
+---
+layout: false
+## 自己紹介
+.introduce-left[
+### 　■ なまえ： 野村 昌由
+### 　■ 業務システム開発</br>　　とインフラ業
+### 　■ 基盤構築・開発試験・運用</br>　　シェル芸は実用主義中道派</br>　　最近はサーバーサイドJSからの</br>　　Node.jsライブラリFW作りなど
+]
+.introduce-right[
+.center[
+[![avator](img/avator.png)](https://nmrmsys.github.io/)
+### 　@nmrmsys
+]
+]
+???
+本名のローマ字綴りを子音だけにしたもの、アバターは Tim O'Reillyさん Web2.0
+---
+class: center
+## シェル芸、やっぱり難しいですよね
+![computer_keyboard_yatsuatari_man](img/computer_keyboard_yatsuatari_man.png)
+## つい手慣れた言語でやりたくなっちゃう
+---
+## 各種スクリプト言語でのワンライナー
+</br>
+```xml
+$ # Perl
+$ perl -alne '$sum+=$F[2];END{print $sum}' data.txt
+
+
+$ # Ruby
+$ ruby -alne 'sum||=0;sum+=$F[2].to_i;END{puts sum}' data.txt
+
+
+$ # PHP
+$ cat data.txt | php -R '$sum+=explode(" ",$argn)[2];' -E 'print $sum . "\n";'
+
+
+$ # Python
+$ # 闇Pythonista で検索
+
+
+$ # JavaScript（Node.js）
+$ # cat data.txt | node -e "require('fs').readFileSync(0).toString()
+.split(/\r?\n/).forEach(function(line){console.log(line);/*ここまで書いて力尽きた*/})" 
+```
+---
+## 無ければ作る精神の発露たち
+[![github_vbs](img/github_vbs.png)](https://github.com/nmrmsys/vbs)
+
+[![github_shellinq](img/github_shellinq.png)](https://github.com/xztaityozx/shellinq)
+---
+## 言語そのままは冗長になりがち問題
+[![qiita_jq_idiom](img/qiita_jq_idiom.png)](https://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1)
+## それならDSLを使えばいいじゃない
+---
+## ただ DSLはDSLで難しい所があって
+## 
+### 
+### たとえば以下のデータ操作にDSLを使うツールたちですが
+- ### [jq](https://qiita.com/nmrmsys/items/5b4a4bd2e3909db161b1) JSONを独自のフィルタ記法で抽出・置換・整形
+- ### [json2csv](https://github.com/zemirco/json2csv) JSONをCSVに変換
+- ### [jo](https://github.com/jpmens/jo) コマンドのパラメータ引数をJSON形式に展開
+- ### [pup](https://github.com/ericchiang/pup) HTMLをCSSセレクタで抽出
+- ### [yq](https://github.com/kislyuk/yq) jqのYAML/XML版
+- ### [jr](https://github.com/yuya-takeyama/jr) JSONをruby記述で抽出・置換・整形
+
+## 一体どれを何個覚えればいいんじゃ？
+---
+## そんなときは、これを使うのだぁ！！
+- ### [q](https://qiita.com/astrsk_hori/items/fbe61e988f526d22efc9) CSVをSQLで抽出・集計
+```xml
+$ q "SELECT COUNT(*) FROM ./clicks_file.csv WHERE c3 > 32.3"
+```
+- ### [TextQL](https://qiita.com/m_kawaguchi/items/1a745266998a4d864a97) qと微妙に機能が異なる
+```xml
+$ textql -header -sql "select * from sample1 where name like '%d%'" sample1.csv
+```
+- ### [trdsql](https://qiita.com/noborus/items/f253961cca6f4465f20c) PostgreSQL/MySQLに接続して処理も可能
+```xml
+$ trdsql -ih "SELECT name,id FROM test.csv WHERE name = 'Orange'"
+```
+
+</br>どれのツールも複数ファイルをSQLの構文で簡単にジョイン出来ちゃいます
+## ビジネス界 至高のデータ操作DSL SQL
+---
+class: center
+## とはいえ SQLの加工整形機能は弱いので
+[![qiita_lodash](img/qiita_lodash.png)](https://qiita.com/nmrmsys/items/766a1d399b7ccbe940d9)
+## 何か代わりになるものを求め彷徨う旅人
+---
+## ちなみに lodashシェル芸はこんな感じ
+```xml
+var users = [
+  { 'user': 'fred',   'age': 48 },
+  { 'user': 'barney', 'age': 34 },
+  { 'user': 'fred',   'age': 40 },
+  { 'user': 'barney', 'age': 36 }
+];
+
+_(users).
+filter(o => o.age >= 40).
+orderBy(['age'], ['desc']).
+groupBy('user').
+value();
+```
+### 加工は [_.reduce()](https://lodash.com/docs/4.17.11#reduce), [_.transform()](https://lodash.com/docs/4.17.11#transform)を使えば、わりと臨機応変
+### 整形は [_.template()](https://lodash.com/docs/4.17.11#template)ってのが、まあ使えはします。
+### ジョインが出来ないのは [lodash-joins](https://github.com/mtraynham/lodash-joins)を使えば。。。
+### 正直 lodash坂も [jq坂](https://nmrmsys.github.io/slides/UsefulJqIdiomInShellGei.html#12)と大差が無いといえば無いような気が
+---
+## コマンドラインからの真lodashシェル芸
+- ### [n_](https://github.com/borisdiakur/n_) lodashを有効にしたNode.jsインタプリタ(真では無い)
+```xml
+$ n_
+n_ > _.compact([0, 1, false, 2, '', 3]);
+[ 1, 2, 3 ]
+n_ >
+```
+- ### [lobar](https://github.com/sodiumjoe/lobar) lodashのCLIラッパー、メソッド呼出の括弧は空白
+```xml
+$ echo '[{"foo":"bar"}, {"foo": 3}]' | lbr filter 'x => isString(x.foo)'
+> [{"foo":"bar"}]
+```
+- ### [hosejs](https://github.com/deptno/hosejs) ramda.js(lodashオルタ)のCLIラッパー
+```xml
+$ cat some.json | j -r "props(['name', 'height'])"
+```
+</br>[ramda.js](https://ramdajs.com/)は純粋関数型風、カリー化を考慮した引数、関数合成が作り易い
+---
+class: center
+## とまあ色々見てきて、選ばれたのは...
+[![AlaSQL](img/AlaSQL.png)](https://github.com/agershun/alasql)
+## <ruby>約束された勝利の剣<rt>エクスカリバー</rt></ruby> AlaSQL でした
+---
+## JSのライブラリだけど [CLI](https://github.com/agershun/alasql/wiki/AlaSQL-CLI)が付いてて
+```xml
+$ # Node.jsが使える環境でインストール
+$ npm install -g alasql
+
+$ alasql -h
+Usage:
+  alasql "sql-statement" [ params ]        - Run SQL statement
+  alasql --file file.sql [ params ]        - (or -f) Run SQL from file
+  alasql --version                         - (or -v) Echo AlaSQL version
+
+$ # CSVファイル名を関数に渡せばテーブルとして取り扱われる、出力はデフォルトJSON
+$ alasql "select * from csv('tbl1.csv') where fld1 like 'a%'"
+
+$ # SELECT INTOで別テーブルやファイルに出力
+$ alasql "select * into tsv('tb1.tsv') from csv('tbl1.csv')"
+$ alasql "select * into xlsx('db.xlsx',{sheetid:'tbl1'}) from csv('tbl1.csv')"
+
+$ # もちろんジョインも可能
+$ alasql "select a.id, b.name from csv('a.csv') a join csv('b.csv') b on a.id2 = b.id2"
+
+$ # JSON操作やJS関数の呼び出しも
+$ alasql "select fld1->a->2 from tsv('json.tsv')" # fld1 = "{a: ['x','y','z']}"
+$ alasql "select hanbaisu->length keta, hizuke->substr(1,4) year from csv('tbl3.csv')"
+
+$ # もうシェル芸じゃ無いけど、複文、CREATE TABLE、インデックス、ユーザー定義関数なんかもある
+$ alasql "create table t1(id int,name text);insert t1 into (1,'fuga');select * from t1"
+```
+
+## [超絶便利](https://www.slideshare.net/AndreyGershun/alasql-manual-141220-1)なので、皆さん使いましょう！
+
+    </textarea>
+    <script src="js/remark-0.6.5.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'bash',
+        highlightStyle: 'sunburst'
+      });
+    </script>
+  </body>
+</html>
